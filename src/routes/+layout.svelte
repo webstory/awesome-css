@@ -4,6 +4,7 @@
       <li><a href="/">Home</a></li>
       <li><a href="/solar-system">Solar System</a></li>
       <li><a href="/glass-effect">Glass Effect</a></li>
+      <li><a href="/drawing-app">Drawing App</a></li>
     </ul>
   </nav>
 </header>
@@ -12,6 +13,7 @@
 </div>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
   nav {
     position: fixed;
     top: 0;
@@ -23,6 +25,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  nav * {
+    font-family: 'Roboto', sans-serif;
   }
   nav ul {
     display: flex;
