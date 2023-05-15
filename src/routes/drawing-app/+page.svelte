@@ -78,6 +78,22 @@
       x = undefined;
       y = undefined;
     }}
+    on:touchstart={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // isPressed = true;
+      // x = e.touches[0].clientX;
+      // y = e.touches[0].clientY;
+    }}
+    on:wheel={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.deltaY < 0) {
+        brushSize = Math.min(50, brushSize + 5);
+      } else {
+        brushSize = Math.max(5, brushSize - 5);
+      }
+    }}
   />
   <div class="toolbox">
     <button id="decrease" on:click={() => (brushSize = Math.max(5, brushSize - 5))}>-</button>
