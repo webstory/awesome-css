@@ -56,6 +56,9 @@
 
     You can chain modifiers together, e.g. on:click|once|capture={...}.
   */
+
+  // See also: https://svelte.dev/repl/f4b5f661bb7b40b7bd1272c1f58d2efc?version=3.24.1
+  //           Automatically setup on: props with attribute props
 </script>
 
 <svelte:head>
