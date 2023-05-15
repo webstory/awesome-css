@@ -20,19 +20,19 @@
     ctx.fillStyle = color;
   });
 
-  function drawCircle(x, y) {
+  function drawCircle(x, y, pressure = 1) {
     ctx.beginPath();
-    ctx.arc(x, y, brushSize, 0, Math.PI * 2);
+    ctx.arc(x, y, brushSize * pressure, 0, Math.PI * 2);
     ctx.fillStyle = color;
     ctx.fill();
   }
 
-  function drawLine(x1, y1, x2, y2) {
+  function drawLine(x1, y1, x2, y2, pressure = 1) {
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.strokeStyle = color;
-    ctx.lineWidth = brushSize * 2;
+    ctx.lineWidth = brushSize * 2 * pressure;
     ctx.stroke();
   }
 
@@ -50,25 +50,33 @@
     bind:this={canvas}
     {width}
     {height}
-    on:mousedown={(e) => {
+    on:pointerdown={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
       isPressed = true;
       x = e.offsetX;
       y = e.offsetY;
     }}
-    on:mouseup={(e) => {
-      isPressed = false;
-      x = undefined;
-      y = undefined;
-    }}
-    on:mousemove={(e) => {
-      if (isPressed) {
+    on:pointermove={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const { pointerType, pressure, tangentialPressure, tiltX, tiltY } = e;
+      console.log({ pointerType, pressure, tangentialPressure, tiltX, tiltY });
+      if (isPressed && pressure > 0) {
         const x2 = e.offsetX;
         const y2 = e.offsetY;
-        drawCircle(x2, y2);
-        drawLine(x, y, x2, y2);
+        drawCircle(x2, y2, pressure);
+        drawLine(x, y, x2, y2, pressure);
         x = x2;
         y = y2;
       }
+    }}
+    on:pointerup={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      isPressed = false;
+      x = undefined;
+      y = undefined;
     }}
   />
   <div class="toolbox">
@@ -101,6 +109,7 @@
 
   .container canvas {
     border: 2px solid #b246b4;
+    cursor: crosshair;
   }
 
   .toolbox {
