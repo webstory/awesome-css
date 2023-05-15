@@ -50,16 +50,12 @@
     bind:this={canvas}
     {width}
     {height}
-    on:pointerdown={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    on:pointerdown|capture|preventDefault|stopPropagation|self={(e) => {
       isPressed = true;
       x = e.offsetX;
       y = e.offsetY;
     }}
-    on:pointermove={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    on:pointermove|preventDefault|stopPropagation|self={(e) => {
       const { pointerType, pressure, tangentialPressure, tiltX, tiltY } = e;
       console.log({ pointerType, pressure, tangentialPressure, tiltX, tiltY });
       if (isPressed && pressure > 0) {
@@ -71,14 +67,14 @@
         y = y2;
       }
     }}
-    on:pointerup={(e) => {
+    on:pointerup|preventDefault|stopPropagation|self={(e) => {
       e.preventDefault();
       e.stopPropagation();
       isPressed = false;
       x = undefined;
       y = undefined;
     }}
-    on:touchstart={(e) => {
+    on:touchstart|preventDefault|stopPropagation|self={(e) => {
       e.preventDefault();
       e.stopPropagation();
       // isPressed = true;
